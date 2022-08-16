@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  db-postgres:
+    image: postgres:14
+    container_name: db-postgres
+    volumes:
+      - .data/postgresql:/var/lib/postgresql/data
+    environment:
+      TZ: 'UTC'
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - db-postgres
+    ports:
+      - ${DB_PORT_EXTERNAL}:${DB_PORT_INTERNAL}
+    restart: unless-stopped
+
+networks:
+  db-postgres:
+    name: db-postgres

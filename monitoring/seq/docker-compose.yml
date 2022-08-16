@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  monitoring-seq:
+    image: datalust/seq
+    container_name: monitoring-seq
+    volumes:
+      - ./data/seq:/data
+    environment:
+      ACCEPT_EULA: 'Y'
+      SEQ_STORAGE_SECRETKEY: ${SEQ_STORAGE_SECRETKEY}
+      SEQ_FIRSTRUN_ADMINUSERNAME: ${SEQ_FIRSTRUN_ADMINUSERNAME}
+      SEQ_FIRSTRUN_ADMINPASSWORDHASH: ${SEQ_FIRSTRUN_ADMINPASSWORDHASH}
+    networks:
+      - monitoring-seq
+    ports:
+      - ${SEQ_PORT_UI_EXTERNAL}:${SEQ_PORT_UI_INTERNAL}
+    restart: unless-stopped
+
+networks:
+  monitoring-seq:
+    name: monitoring-seq

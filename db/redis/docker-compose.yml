@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  db-redis:
+    image: redis:6
+    container_name: db-redis
+    networks:
+      - db-deploy
+    ports:
+      - ${REDIS_PORT_EXTERNAL}:${REDIS_PORT_INTERNAL}
+    restart: unless-stopped
+
+networks:
+  db-redis:
+    name: db-redis

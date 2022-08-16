@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  nextjs-server:
+    container_name: nextjs-server
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: ${APP_ENVIRONMENT}
+        PORT_INTERNAL: ${APP_PORT_INTERNAL}
+    env_file: ./.env
+    networks:
+      - nextjs-server
+    ports:
+      - ${APP_PORT_EXTERNAL}:${APP_PORT_INTERNAL}
+    restart: unless-stopped
+
+networks:
+  nextjs-server:
+    name: nextjs-server

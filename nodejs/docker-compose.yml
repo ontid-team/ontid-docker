@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  nodejs-server:
+    container_name: nodejs-server
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: ${APP_ENVIRONMENT}
+        PORT_INTERNAL: ${APP_PORT_INTERNAL}
+    env_file: ./.env
+    networks:
+      - nodejs-server
+    ports:
+      - ${APP_PORT_EXTERNAL}:${APP_PORT_INTERNAL}
+    restart: unless-stopped
+
+networks:
+  nodejs-server:
+    name: nodejs-server

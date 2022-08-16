@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  nginx-server:
+    image: nginx:alpine
+    container_name: nginx-server
+    volumes:
+      - ./nginx/app.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - nginx-server
+    ports:
+      - ${NGINX_PORT_EXTERNAL}:${NGINX_PORT_INTERNAL}
+    restart: unless-stopped
+
+networks:
+  nginx-server:
+    name: nginx-server
